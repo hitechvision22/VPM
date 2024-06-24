@@ -1,0 +1,18 @@
+
+**Admin Login Details** 
+
+Email   : thoma@mail.com
+Password: Password@123
+
+
+employée 
+Email : christine@mail.com
+password : 12345678
+
+
+Accés à la base de donnée 
+Name user : hitechvi_Admin 
+Password : Hitech2003
+
+name database :
+hitechvi_hrsystemci
