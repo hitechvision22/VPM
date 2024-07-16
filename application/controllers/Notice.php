@@ -1,8 +1,7 @@
- <?php
+<?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Notice extends CI_Controller {
-
 
     function __construct() {
         parent::__construct();
@@ -15,79 +14,53 @@ class Notice extends CI_Controller {
         $this->load->model('leave_model');
     }
     
-	public function index()
-	{
-		#Redirect to Admin dashboard after authentication
+    public function index() {
         if ($this->session->userdata('user_login_access') == 1)
             redirect('dashboard/Dashboard');
-            $data=array();
-            #$data['settingsvalue'] = $this->dashboard_model->GetSettingsValue();
-			$this->load->view('login');
-	}
-    public function All_notice(){
+        $data=array();
+        $this->load->view('login');
+    }
+
+    public function All_notice() {
         if($this->session->userdata('user_login_access') != False) {
-        $data['notice'] = $this->notice_model->GetNotice();
-        $this->load->view('backend/notice',$data);
-        }
-    else{
-		redirect(base_url() , 'refresh');
-	}        
+            $data['notice'] = $this->notice_model->GetNotice();
+            $data['employees'] = $this->employee_model->GetAllEmployee();
+            $this->load->view('backend/notice',$data);
+        } else {
+            redirect(base_url() , 'refresh');
+        }        
     }
-    public function Published_Notice(){
-    if($this->session->userdata('user_login_access') != False) {    
-    $filetitle = $this->input->post('title');    		
-    $ndate = $this->input->post('nodate');    		
-        $this->load->library('form_validation');
-        $this->form_validation->set_error_delimiters();
-        $this->form_validation->set_rules('title', 'title', 'trim|required|min_length[25]|max_length[150]|xss_clean');
 
-        if ($this->form_validation->run() == FALSE) {
-            echo validation_errors();
-			#redirect("notice/All_notice");
-			} else {
-            if($_FILES['file_url']['name']){
-            $file_name = $_FILES['file_url']['name'];
-			$fileSize = $_FILES["file_url"]["size"]/1024;
-			$fileType = $_FILES["file_url"]["type"];
-			$new_file_name='';
-            $new_file_name .= $file_name;
-
-            $config = array(
-                'file_name' => $new_file_name,
-                'upload_path' => "./assets/images/notice",
-                'allowed_types' => "gif|jpg|png|jpeg|pdf|doc|docx",
-                'overwrite' => False,
-                'max_size' => "50720000"
-            );
-    
-            $this->load->library('Upload', $config);
-            $this->upload->initialize($config);                
-            if (!$this->upload->do_upload('file_url')) {
-                echo $this->upload->display_errors();
-                #redirect("notice/All_notice");
-			}
-   
-			else {
-                $path = $this->upload->data();
-                $img_url = $path['file_name'];
-                $data = array();
-                $data = array(
-                    'title' => $filetitle,
-                    'file_url' => $img_url,
-                    'date' => $ndate
-                );
-            $success = $this->notice_model->Published_Notice($data); 
-            #$this->session->set_flashdata('feedback','Successfully Updated');
-            #redirect("notice/All_notice");
-                echo "Successfully Added";
-			}
-        }
+    public function Published_Notice() {
+        if($this->session->userdata('user_login_access') != False) {    
+            $title = $this->input->post('title');           
+            $description = $this->input->post('description');
+            $employee_id = $this->input->post('employee_id');
             
-        }
-        }
-    else{
-		redirect(base_url() , 'refresh');
-	}        
+            $this->load->library('form_validation');
+            $this->form_validation->set_error_delimiters();
+            $this->form_validation->set_rules('title', 'title', 'trim|required|min_length[5]|max_length[150]|xss_clean');
+            $this->form_validation->set_rules('description', 'description', 'trim|required|xss_clean');
+            $this->form_validation->set_rules('employee_id', 'employee', 'trim|required|xss_clean');
+
+            if ($this->form_validation->run() == FALSE) {
+                echo validation_errors();
+            } else {
+                $data = array(
+                    'title' => $title,
+                    'description' => $description,
+                    'employee_id' => $employee_id
+                );
+                $success = $this->notice_model->Published_Notice($data); 
+                if($success) {
+                    $this->session->set_flashdata('feedback','Successfully Added');
+                    //echo "Successfully Added";
+                } else {
+                    //echo "Failed to add notice";
+                }
+            }
+        } else {
+            redirect(base_url() , 'refresh');
+        }        
     }
-    
 }
