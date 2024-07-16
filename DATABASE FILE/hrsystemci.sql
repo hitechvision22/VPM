@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : jeu. 20 juin 2024 à 09:42
+-- Généré le : lun. 15 juil. 2024 à 16:47
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -50,7 +50,8 @@ INSERT INTO `addition` (`addi_id`, `salary_id`, `basic`, `medical`, `house_rent`
 (7, 7, '4300.00', '430.00', '3440.00', '430.00'),
 (8, 8, '5500.00', '550.00', '4400.00', '550.00'),
 (9, 9, '3500.00', '350.00', '2800.00', '350.00'),
-(10, 10, '2800.00', '280.00', '2240.00', '280.00');
+(10, 10, '2800.00', '280.00', '2240.00', '280.00'),
+(11, 11, '22500.00', '2250.00', '18000.00', '2250.00');
 
 -- --------------------------------------------------------
 
@@ -270,7 +271,8 @@ INSERT INTO `deduction` (`de_id`, `salary_id`, `provident_fund`, `bima`, `tax`, 
 (7, 7, '200', '300', '7', '0'),
 (8, 8, '300', '560', '10', '0'),
 (9, 9, '0', '0', '0', '0'),
-(10, 10, '0', '100', '10', '0');
+(10, 10, '0', '100', '10', '0'),
+(11, 11, '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -448,10 +450,11 @@ INSERT INTO `employee` (`id`, `em_id`, `em_code`, `des_id`, `dep_id`, `first_nam
 (39, 'Rob1472', '1058', 9, 4, 'Stephany', 'Robs', 'stephany@mail.com', '7672fb4033bc7bc14e2e26e5e0679e3c2a1bd514', 'EMPLOYEE', NULL, 'ACTIVE', 'Female', '7850001111', '1992-12-24', 'A+', '2021-04-14', '', 'Rob1472.png', '7000105000'),
 (40, 'Tho1044', '8877', 13, 5, 'Chris', 'Thompson', 'chris@mail.com', '260a678229cde1991cd1ac0d6adb4980c76c5e7f', 'EMPLOYEE', NULL, 'ACTIVE', 'Male', '7852140000', '1993-01-02', 'AB+', '2021-10-01', '', 'Tho1044.png', '0102580010'),
 (41, 'Smi1266', '3008', 23, 8, 'Colin', 'Smith', 'colin@mail.com', '7b4286b09972e2859b718440aa68a2a6eeb869dd', 'EMPLOYEE', NULL, 'ACTIVE', 'Male', '7400001450', '1990-12-12', 'B+', '2021-10-10', '', 'Smi1266.png', '0147000000'),
-(42, 'Moo1634', '6661', 26, 10, 'Christine', 'Moore', 'christine@mail.com', '37219392e904e98b6dca4f729f1d29c642d40e19', 'EMPLOYEE', NULL, 'ACTIVE', 'Female', '1010140000', '1991-04-05', 'A-', '2021-10-10', '', 'Moo1634.png', '147850000144'),
+(42, 'Moo1634', '6661', 26, 10, 'Christine', 'Moore', 'christine@mail.com', '7c222fb2927d828af22f592134e8932480637c0d', 'EMPLOYEE', NULL, 'ACTIVE', 'Female', '1010140000', '1991-04-05', 'A-', '2021-10-10', '', 'Moo1634.png', '147850000144'),
 (43, 'Joh1474', '8829', 22, 7, 'Michael', 'Johnson', 'michael@mail.com', 'd492ed1b1fdfbc9ca9db7c10c7df38d2b488fb14', 'EMPLOYEE', NULL, 'ACTIVE', 'Male', '7801450000', '1986-02-23', 'B-', '2021-02-02', '', 'Joh1474.png', '600254000014'),
 (44, 'Den1745', '6600', 20, 7, 'Emily', 'Denn', 'emily@mail.com', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 'EMPLOYEE', NULL, 'ACTIVE', 'Female', '7410144470', '1996-03-03', 'AB+', '2021-10-10', '', 'Den1745.png', '880024520000'),
-(45, 'Lea1766', '2580', 12, 8, 'Ornella', 'Leaticia', 'ornella@gmail.com', 'f7c3bc1d808e04732adf679965ccc34ca7ae3441', 'SUPER ADMIN', NULL, 'ACTIVE', 'Female', '6998877458', '1999-06-18', 'O+', '2024-06-15', '2024-06-13', 'Lea1766.jpg', '123456789745');
+(45, 'Lea1766', '2580', 12, 8, 'Ornella', 'Leaticia', 'ornella@gmail.com', 'f7c3bc1d808e04732adf679965ccc34ca7ae3441', 'SUPER ADMIN', NULL, 'ACTIVE', 'Female', '6998877458', '1999-06-18', 'O+', '2024-06-15', '2024-06-13', 'Lea1766.jpg', '123456789745'),
+(46, 'fos1537', '8258', 24, 5, 'Maxime junior', 'fossa sokeng', 'sokengfossa@gmail.com', 'f7c3bc1d808e04732adf679965ccc34ca7ae3441', 'EMPLOYEE', NULL, 'ACTIVE', 'Male', '+237 99449138', '2022-03-12', '', '2024-07-08', '2024-07-02', NULL, '12345678999');
 
 -- --------------------------------------------------------
 
@@ -465,6 +468,19 @@ CREATE TABLE `employee_file` (
   `file_title` varchar(512) DEFAULT NULL,
   `file_url` varchar(512) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `employee_reports`
+--
+
+CREATE TABLE `employee_reports` (
+  `id` int(11) NOT NULL,
+  `id_employee` int(11) NOT NULL,
+  `report_content` text NOT NULL,
+  `report_date` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -565,7 +581,8 @@ INSERT INTO `emp_salary` (`id`, `emp_id`, `type_id`, `total`) VALUES
 (7, 'Moo1634', 2, '8600'),
 (8, 'Joh1474', 2, '11000'),
 (9, 'Tho1044', 2, '7000'),
-(10, 'Den1745', 2, '5600');
+(10, 'Den1745', 2, '5600'),
+(11, 'fos1537', 2, '45000');
 
 -- --------------------------------------------------------
 
@@ -756,19 +773,18 @@ CREATE TABLE `logistic_assign` (
 
 CREATE TABLE `notice` (
   `id` int(11) NOT NULL,
-  `title` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `file_url` varchar(256) DEFAULT NULL,
-  `date` varchar(64) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  `title` varchar(150) NOT NULL,
+  `description` text NOT NULL,
+  `date` datetime NOT NULL DEFAULT current_timestamp(),
+  `employee_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `notice`
 --
 
-INSERT INTO `notice` (`id`, `title`, `file_url`, `date`) VALUES
-(1, 'This is a demo notice for all!', 'sample_image.jpg', '2022-01-01'),
-(2, 'Office Decorum Notice to Staff Members', 'offnot1.png', '2021-12-21'),
-(3, 'Warning for Violation of Office Decorum', 'offnot2.png', '2021-12-27');
+INSERT INTO `notice` (`id`, `title`, `description`, `date`, `employee_id`) VALUES
+(6, 'rapport journaliére', 'je suis nouveau j\'ai beaucoup travailler et j\'ai beaucoup reflechi et j\'ai fais authentification et les requete j\'ai traduit j\'ai analyse j\'ai accomplir', '2024-07-14 21:28:39', 42);
 
 -- --------------------------------------------------------
 
@@ -948,21 +964,6 @@ CREATE TABLE `pro_task_assets` (
   `pro_task_id` int(11) NOT NULL,
   `assign_id` varchar(64) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `reports`
---
-
-CREATE TABLE `reports` (
-  `id` int(11) NOT NULL,
-  `em_id` int(11) NOT NULL,
-  `report_date` date NOT NULL,
-  `report_content` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1154,6 +1155,13 @@ ALTER TABLE `employee_file`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Index pour la table `employee_reports`
+--
+ALTER TABLE `employee_reports`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_employee` (`id_employee`);
+
+--
 -- Index pour la table `emp_assets`
 --
 ALTER TABLE `emp_assets`
@@ -1229,7 +1237,8 @@ ALTER TABLE `logistic_assign`
 -- Index pour la table `notice`
 --
 ALTER TABLE `notice`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `employee_id` (`employee_id`);
 
 --
 -- Index pour la table `pay_salary`
@@ -1274,13 +1283,6 @@ ALTER TABLE `pro_task_assets`
   ADD PRIMARY KEY (`id`);
 
 --
--- Index pour la table `reports`
---
-ALTER TABLE `reports`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `em_id` (`em_id`);
-
---
 -- Index pour la table `salary_type`
 --
 ALTER TABLE `salary_type`
@@ -1312,7 +1314,7 @@ ALTER TABLE `to-do_list`
 -- AUTO_INCREMENT pour la table `addition`
 --
 ALTER TABLE `addition`
-  MODIFY `addi_id` int(14) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `addi_id` int(14) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT pour la table `address`
@@ -1360,7 +1362,7 @@ ALTER TABLE `bank_info`
 -- AUTO_INCREMENT pour la table `deduction`
 --
 ALTER TABLE `deduction`
-  MODIFY `de_id` int(14) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `de_id` int(14) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT pour la table `department`
@@ -1396,13 +1398,19 @@ ALTER TABLE `education`
 -- AUTO_INCREMENT pour la table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT pour la table `employee_file`
 --
 ALTER TABLE `employee_file`
   MODIFY `id` int(14) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `employee_reports`
+--
+ALTER TABLE `employee_reports`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `emp_assets`
@@ -1432,7 +1440,7 @@ ALTER TABLE `emp_penalty`
 -- AUTO_INCREMENT pour la table `emp_salary`
 --
 ALTER TABLE `emp_salary`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT pour la table `field_visit`
@@ -1480,7 +1488,7 @@ ALTER TABLE `logistic_assign`
 -- AUTO_INCREMENT pour la table `notice`
 --
 ALTER TABLE `notice`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT pour la table `pay_salary`
@@ -1525,12 +1533,6 @@ ALTER TABLE `pro_task_assets`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT pour la table `reports`
---
-ALTER TABLE `reports`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT pour la table `salary_type`
 --
 ALTER TABLE `salary_type`
@@ -1559,10 +1561,16 @@ ALTER TABLE `to-do_list`
 --
 
 --
--- Contraintes pour la table `reports`
+-- Contraintes pour la table `employee_reports`
 --
-ALTER TABLE `reports`
-  ADD CONSTRAINT `reports_ibfk_1` FOREIGN KEY (`em_id`) REFERENCES `employee` (`id`);
+ALTER TABLE `employee_reports`
+  ADD CONSTRAINT `employee_reports_ibfk_1` FOREIGN KEY (`id_employee`) REFERENCES `employee` (`id`);
+
+--
+-- Contraintes pour la table `notice`
+--
+ALTER TABLE `notice`
+  ADD CONSTRAINT `notice_ibfk_1` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
